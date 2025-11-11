@@ -1,33 +1,52 @@
-import React from 'react';
-import { popularCourses } from '../../data/dummyData';
+import React from "react";
+import { popularCourses } from "../../data/dummyData";
 
 const CourseGrid = () => {
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">
-          Popular Courses
-        </h2>
-        <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-          Discover the most sought-after courses that professionals are taking to advance their careers
-        </p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <h2 className="text-3xl font-bold text-gray-800 mb-6">Popular Courses</h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
           {popularCourses.map((course) => (
             <div
               key={course.id}
-              className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition duration-300 hover:border-blue-500"
+              className="bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition relative"
             >
-              <div className="text-4xl mb-4 text-center">{course.icon}</div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-3 text-center">
-                {course.title}
-              </h3>
-              <p className="text-gray-600 text-center">
-                {course.description}
-              </p>
-              <button className="w-full mt-4 bg-[#184B4B] text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300">
-                Buy Now
-              </button>
+              {/* Badge */}
+              {course.bestSeller && (
+                <span className="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded">
+                  Best Seller
+                </span>
+              )}
+
+              {/* Course Image */}
+              <img
+                src={course.image}
+                alt={course.title}
+                className="w-full h-48 object-cover rounded-t-lg"
+              />
+
+              {/* Card Content */}
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-gray-800 mb-1">{course.title}</h3>
+                <p className="text-gray-600 text-sm mb-1">Duration: {course.duration}</p>
+                <p className="text-gray-600 text-sm mb-1">
+                  Price: {course.isFree ? "Free" : `$${course.price}`}
+                </p>
+                <p className="text-gray-500 text-sm mb-2">Platform: {course.platform}</p>
+                <p className="text-yellow-500 text-sm mb-2">
+                  {"★".repeat(Math.floor(course.rating))} ({course.reviews})
+                </p>
+
+                <button className="w-full mt-2 bg-[#184B4B] text-white py-2 rounded-lg hover:bg-[#0d3333] transition">
+                  {course.isFree ? "Enroll Now" : "Buy Now"}
+                </button>
+
+                <button className="w-full mt-2 text-teal-600 text-sm hover:underline">
+                  View More Info
+                </button>
+              </div>
             </div>
           ))}
         </div>
